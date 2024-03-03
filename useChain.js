@@ -8,7 +8,7 @@ const useChain = (contractAbi, contractBytecode, network) => {
 
   useEffect(() => {
     const init = async () => {
-      // Detect the MetaMask provider
+     
       const detectedProvider = await detectEthereumProvider();
 
       // Set up the ethers.js provider
