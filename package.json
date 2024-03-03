@@ -1,0 +1,7 @@
+{
+  "dependencies": {
+    "@metamask/detect-provider": "^2.0.0",
+    "@nomiclabs/hardhat-ethers": "^2.2.3",
+    "ethers": "^6.11.1"
+  }
+}
