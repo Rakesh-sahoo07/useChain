@@ -14,14 +14,14 @@ npm i usechain
 
 2. Import the hook into your React components:
 ```javascript
-import useChain from 'useChain';
+import useChain from 'usechain';
 
 ```
 ## Usage
 Here's a basic example demonstrating how to use the useChain hook:
 ```javascript
 import React from 'react';
-import useChain from 'useChain';
+import useChain from 'usechain';
 
 const contractAddress = "0xa1D4f2Cd672ED6EcE465FE85f33DB9D48aC338ab"; // Example contract address
 const contractABI = abi; // Example contract ABI , if you import the abi from the json then you can use like this also , here we just need the abi(const contractABI = abi.abi )
