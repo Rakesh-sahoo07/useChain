@@ -1,60 +1,40 @@
 import { useState, useEffect } from 'react';
 import { ethers } from 'ethers';
-import detectEthereumProvider from '@metamask/detect-provider';
 
-const useChain = (contractAbi, contractBytecode, network) => {
-  const [ethersObject, setEthersObject] = useState(null);
-  const [provider, setProvider] = useState(null);
+const useChain = (contractAddress, contractABI) => {
+  const [state, setState] = useState({
+    provider: null,
+    signer: null,
+    contract: null,
+  });
+  const [account, setAccount] = useState("");
 
   useEffect(() => {
     const init = async () => {
-     
-      const detectedProvider = await detectEthereumProvider();
+      try {
+        const { ethereum } = window;
 
-      // Set up the ethers.js provider
-      let ethersProvider;
-      if (detectedProvider) {
-        ethersProvider = new ethers.providers.Web3Provider(detectedProvider);
-      } else {
-        // If MetaMask not detected, use Hardhat provider for local development
-        ethersProvider = new ethers.providers.JsonRpcProvider('http://localhost:8545');
+        if (ethereum) {
+          const accounts = await ethereum.request({ method: "eth_requestAccounts" });
+          const provider = new ethers.providers.Web3Provider(ethereum);
+          const signer = provider.getSigner();
+          const contract = new ethers.Contract(contractAddress, contractABI, signer);
+
+          const userAccount = accounts[0];
+          setAccount(userAccount);
+          setState({ provider, signer, contract });
+        } else {
+          throw new Error("Please install MetaMask");
+        }
+      } catch (error) {
+        console.error(error);
       }
-
-      // Use specified network if provided
-      if (network) {
-        ethersProvider = new ethers.providers.JsonRpcProvider(network);
-      }
-
-      // Set the provider and ethers object in state
-      setProvider(ethersProvider);
-      setEthersObject(new ethers.ContractFactory(contractAbi, contractBytecode, ethersProvider.getSigner()));
     };
 
     init();
-  }, []);
+  }, [contractAddress, contractABI]);
 
-  const connectWallet = async () => {
-    try {
-      await provider.request({ method: 'eth_requestAccounts' });
-      alert('Wallet connected successfully!');
-    } catch (error) {
-      console.error('Error connecting wallet:', error);
-    }
-  };
-
-  const deployContract = async (param1, param2, ...) => {
-    try {
-      const contract = await ethersObject.deploy(param1, param2, ...);
-      alert('Smart contract deployed successfully:', contract.address);
-    } catch (error) {
-      console.error('Error deploying smart contract:', error);
-    }
-  };
-
-  return {
-    connectWallet,
-    deployContract,
-  };
+  return { state, account };
 };
 
 export default useChain;

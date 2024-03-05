@@ -2,6 +2,34 @@
   "dependencies": {
     "@metamask/detect-provider": "^2.0.0",
     "@nomiclabs/hardhat-ethers": "^2.2.3",
-    "ethers": "^6.11.1"
-  }
+    "ethers": "^5.7.2",
+    "react": "^18.2.0"
+  },
+  "name": "usechain",
+  "version": "1.0.0",
+  "description": "An npm package to connect with web3 wallets and deploy smart contracts",
+  "main": "useChain.js",
+  "type": "module",
+  "devDependencies": {
+    "mocha": "^10.3.0"
+  },
+  "scripts": {
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Rakesh-sahoo07/useChain.git"
+  },
+  "keywords": [
+    "blockchain",
+    "metamask",
+    "smartcontract",
+    "web3"
+  ],
+  "author": "Rakesh sahoo",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Rakesh-sahoo07/useChain/issues"
+  },
+  "homepage": "https://github.com/Rakesh-sahoo07/useChain#readme"
 }
