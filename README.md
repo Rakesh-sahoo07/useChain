@@ -22,24 +22,27 @@ Here's a basic example demonstrating how to use the useChain hook:
 ```javascript
 import React from 'react';
 import useChain from 'usechain';
+import abi from './Abi.json';
 
-const contractAddress = "0xa1D4f2Cd672ED6EcE465FE85f33DB9D48aC338ab"; // Example contract address
-const contractABI = abi; // Example contract ABI , if you import the abi from the json then you can use like this also , here we just need the abi(const contractABI = abi.abi )
+const contractAddress = "0xa1D4f2Cd672ED6EcE465FE85f33DB9D48aC338ab";
+const contractABI = abi.abi;
 
 const ExampleComponent = () => {
-  const { state, account } = useChain(contractAddress, contractABI);
+  const { state, account, login } = useChain(contractAddress, contractABI);
 
-  const handleConnectWallet = () => {
-    console.log("Wallet connected!");
-    console.log("Provider:", state.provider);
-    console.log("Signer:", state.signer);
-    console.log("Contract:", state.contract);
-    console.log("Account:", account);
+  const handleConnectWallet = async () => {
+    await login();
   };
 
   return (
     <div>
       <button onClick={handleConnectWallet}>Connect Wallet</button>
+      <p>Account: {account}</p>
+      {console.log("Wallet connected!")}
+      {console.log("Provider:", state.provider)}
+      {console.log("Signer:", state.signer)}
+      {console.log("Contract:", state.contract)}
+      {console.log("Account:", account)}
     </div>
   );
 };

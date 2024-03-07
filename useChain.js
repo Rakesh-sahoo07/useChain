@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState , useEffect} from 'react';
 import { ethers } from 'ethers';
 
 const useChain = (contractAddress, contractABI, loginType = 'onRender') => {
@@ -9,7 +9,7 @@ const useChain = (contractAddress, contractABI, loginType = 'onRender') => {
   });
   const [account, setAccount] = useState("");
 
-  const loginWithUseEffect = async () => {
+  const login = async () => {
     try {
       const { ethereum } = window;
 
@@ -29,34 +29,13 @@ const useChain = (contractAddress, contractABI, loginType = 'onRender') => {
     }
   };
 
-  const loginWithAsyncAwait = async () => {
-    try {
-      const { ethereum } = window;
-
-      if (ethereum) {
-        const accounts = await ethereum.request({ method: "eth_requestAccounts" });
-        const provider = new ethers.providers.Web3Provider(ethereum);
-        const signer = provider.getSigner();
-        const contract = new ethers.Contract(contractAddress, contractABI, signer);
-        const userAccount = accounts[0];
-        setAccount(userAccount);
-        setState({ provider, signer, contract });
-      } else {
-        throw new Error("Please install MetaMask");
-      }
-    } catch (error) {
-      console.error(error);
+  useEffect(() => {
+    if (loginType === 'onRender') {
+      login();
     }
-  };
-  if (loginType === 'onRender') {
-    useEffect(() => {
-      loginWithUseEffect();
-    }, [contractAddress, contractABI]);
-  } else if (loginType === 'onButtonClick') {
-    loginWithAsyncAwait();
-  }
+  }, [contractAddress, contractABI, loginType]);
 
-  return { state, account };
+  return { state, account, login };
 };
 
 export default useChain;
