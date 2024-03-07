@@ -6,7 +6,7 @@
     "react": "^18.2.0"
   },
   "name": "usechain",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "An npm package to connect with web3 wallets and deploy smart contracts",
   "main": "useChain.js",
   "type": "module",
