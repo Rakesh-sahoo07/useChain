@@ -1,7 +1,7 @@
-import { useState , useEffect} from 'react';
+import { useState} from 'react';
 import { ethers } from 'ethers';
 
-const useChain = (contractAddress, contractABI, loginType = 'onRender') => {
+const useChain = (contractAddress, contractABI) => {
   const [state, setState] = useState({
     provider: null,
     signer: null,
@@ -28,12 +28,6 @@ const useChain = (contractAddress, contractABI, loginType = 'onRender') => {
       console.error(error);
     }
   };
-
-  useEffect(() => {
-    if (loginType === 'onRender') {
-      login();
-    }
-  }, [contractAddress, contractABI, loginType]);
 
   return { state, account, login };
 };
